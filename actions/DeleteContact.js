@@ -1,9 +1,9 @@
 const axios = require('axios');
 
 module.exports = {
-  key: "RemoveContact",
-  title: "Remove contact",
-  description: "",
+  key: "DeleteContact",
+  title: "Delete contact",
+  description: "Delete contact form doo contact center",
   type: "delete",
   inputParameters: [
     {

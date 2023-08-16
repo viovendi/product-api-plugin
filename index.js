@@ -1,12 +1,10 @@
-const RemoveContact = require("./actions/RemoveContact.js");
-const SampleAction = require("./actions/SampleAction");
+const DeleteContact = require("./actions/DeleteContact");
 
 module.exports = {
     title: 'doo Product Automations',
     description: 'doo Product Automations connector for Connery',
     actions: [
-		RemoveContact,
-        SampleAction,
+		DeleteContact,
     ],
     configurationParameters: [
         {
