@@ -1,17 +1,60 @@
+const axios = require('axios');
 const DeleteContact = require('../actions/DeleteContact');
+const { getAccessToken, getUserAgent } = require('../shared/shared');
+
+jest.mock('axios');
+jest.mock('../shared/shared');
 
 // NOTE: You don't need to test whether the input parameters are provided and valid. 
 // Connery Runner will handle that based on your action definition.
 // So you only need to test the logic of your action here.
 
-// TODO: Rename the test suite below to match your use case.
-it('should verify if the DeleteContact action works as expected', async () => {
-    // TODO: Uncomment the line below and specify the input parameters for your test case.
-    // const inputParameters = {...};
+it('should delete contact and return success', async () => {
+    getAccessToken.mockResolvedValue('mockedAccessToken');
+    getUserAgent.mockReturnValue('mockedUserAgent');
+    axios.delete.mockResolvedValue({});
 
-    // TODO: Uncomment the line below to call your action.
-    // const result = await DeleteContact.operation.handler({ inputParameters });
+    const result = await DeleteContact.operation.handler({
+        inputParameters: {
+            ClientId: 'testClientId',
+            ClientSecret: 'testClientSecret',
+            ContactId: 'testContactId'
+        },
+        configurationParameters: {
+            DooApiUrl: 'https://api.doo.net',
+            DooApiKey: 'testApiKey'
+        },
+        action: {
+            key: 'testActionKey'
+        }
+    });
 
-    // TODO: Uncomment the line below and specify the output parameter you want to test and the expected value.
-    // expect(...).toBe(...);
+    expect(result.ExecutionResult).toBe('success');
+});
+
+it('should throw error on deletion failure', async () => {
+    getAccessToken.mockResolvedValue('mockedAccessToken');
+    getUserAgent.mockReturnValue('mockedUserAgent');
+
+    axios.delete.mockRejectedValueOnce({
+        response: {
+            status: 404,
+            statusText: 'Not Found'
+        }
+    });
+
+    await expect(DeleteContact.operation.handler({
+        inputParameters: {
+            ClientId: 'testClientId',
+            ClientSecret: 'testClientSecret',
+            ContactId: 'testContactId'
+        },
+        configurationParameters: {
+            DooApiUrl: 'https://api.doo.net',
+            DooApiKey: 'testApiKey'
+        },
+        action: {
+            key: 'testActionKey'
+        }
+    })).rejects.toThrow('Error 404: Not Found');
 });

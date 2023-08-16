@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { getAccessToken, getUserAgent } = require('../shared/shared');
 
 module.exports = {
   key: "DeleteContact",
@@ -67,7 +68,7 @@ async function handler({ inputParameters, configurationParameters, action }) {
 
     if (error.response) {
       // The request was made and the server responded with a non-2xx status code
-      errorMessage = `Error ${error.response.status}: ${error.response.data.message || error.response.statusText}`;
+      errorMessage = `Error ${error.response.status}: ${error.response.data?.message || error.response.statusText}`;
     } else if (error.request) {
       // The request was made but no response was received
       errorMessage = "No response received from server.";
@@ -77,31 +78,5 @@ async function handler({ inputParameters, configurationParameters, action }) {
     }
 
     throw new Error(errorMessage);
-  }
-}
-
-async function getAccessToken(clientId, clientSecret, dooApiUrl, dooApiKey, actionKey) {
-  const response = await axios.post(`${dooApiUrl}/v1/oauth`, {
-    client_id: clientId,
-    client_secret: clientSecret,
-    grant_type: 'client_credentials'
-  },
-    {
-      headers: {
-        'x-api-key': dooApiKey,
-        'x-doo-user-agent': getUserAgent(actionKey),
-      }
-    })
-
-  return response.data.data.access_token;
-}
-
-function getUserAgent(actionKey) {
-  return {
-    userAgent: 'connery',
-    connery: {
-      connector: 'viovendi/doo-product-automations',
-      action: actionKey,
-    }
   }
 }
