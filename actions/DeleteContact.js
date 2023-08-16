@@ -47,15 +47,15 @@ module.exports = {
   ],
 };
 
-// TODO: add x-doo-user-agent header to all the requests
-async function handler({ inputParameters, configurationParameters }) {
+async function handler({ inputParameters, configurationParameters, action }) {
   try {
     const accessToken = await getAccessToken(inputParameters.ClientId, inputParameters.ClientSecret, configurationParameters.DooApiUrl);
-    
+
     await axios.delete(`${configurationParameters.DooApiUrl}/v1/organizers/current/contacts/${inputParameters.ContactId}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
-        'x-api-key': configurationParameters.DooApiKey
+        'x-api-key': configurationParameters.DooApiKey,
+        'x-doo-user-agent': getUserAgent(action.key),
       }
     });
 
@@ -75,24 +75,33 @@ async function handler({ inputParameters, configurationParameters }) {
       // An error occurred in setting up the request
       errorMessage = error.message;
     }
-    
-    throw errorMessage
+
+    throw new Error(errorMessage);
   }
 }
 
-async function getAccessToken(clientId, clientSecret, dooApiUrl, dooApiKey) {
+async function getAccessToken(clientId, clientSecret, dooApiUrl, dooApiKey, actionKey) {
   const response = await axios.post(`${dooApiUrl}/v1/oauth`, {
     client_id: clientId,
     client_secret: clientSecret,
     grant_type: 'client_credentials'
   },
-  {
-    headers: {
-      'x-api-key': dooApiKey,
-      'accept': 'application/json',
-      'content-type': 'application/json'
-    }
-  })
+    {
+      headers: {
+        'x-api-key': dooApiKey,
+        'x-doo-user-agent': getUserAgent(actionKey),
+      }
+    })
 
   return response.data.data.access_token;
+}
+
+function getUserAgent(actionKey) {
+  return {
+    userAgent: 'connery',
+    connery: {
+      connector: 'viovendi/doo-product-automations',
+      action: actionKey,
+    }
+  }
 }
