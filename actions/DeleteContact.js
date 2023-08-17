@@ -4,7 +4,7 @@ const { getAccessToken, getUserAgent } = require('../shared/shared');
 module.exports = {
   key: "DeleteContact",
   title: "Delete contact",
-  description: "Delete contact form doo contact center",
+  description: "Delete contact from doo organization.",
   type: "delete",
   inputParameters: [
     {

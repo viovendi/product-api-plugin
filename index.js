@@ -1,9 +1,11 @@
+const GetAllContactsForOrganization = require("./actions/GetAllContactsForOrganization");
 const DeleteContact = require("./actions/DeleteContact");
 
 module.exports = {
     title: 'doo Product Automations',
     description: 'doo Product Automations connector for Connery',
     actions: [
+		GetAllContactsForOrganization,
 		DeleteContact,
     ],
     configurationParameters: [
