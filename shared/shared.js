@@ -26,7 +26,7 @@ function getUserAgent(actionKey) {
     }
 }
 
-function handleError(error) {
+function getErrorMessage(error) {
     var errorMessage;
 
     // TODO: cover error handling with unit tests
@@ -45,11 +45,11 @@ function handleError(error) {
         errorMessage = error.message;
     }
 
-    throw new Error(errorMessage);
+    return errorMessage;
 }
 
 module.exports = {
     getAccessToken,
     getUserAgent,
-    handleError
+    getErrorMessage
 }

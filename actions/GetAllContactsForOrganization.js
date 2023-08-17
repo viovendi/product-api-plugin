@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { getAccessToken, getUserAgent, handleError } = require('../shared/shared');
+const { getAccessToken, getUserAgent, getErrorMessage } = require('../shared/shared');
 
 module.exports = {
   key: "GetAllContactsForOrganization",
@@ -77,6 +77,7 @@ async function handler({ inputParameters, configurationParameters, action }) {
       ExecutionResult: contacts
     };
   } catch (error) {
-    handleError(error);
+    const errorMessage = getErrorMessage(error);
+    throw new Error(errorMessage);
   }
 }
