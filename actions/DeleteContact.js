@@ -66,9 +66,9 @@ async function handler({ inputParameters, configurationParameters, action }) {
   } catch (error) {
     var errorMessage;
 
+    // TODO: cover error handling with unit tests
     if (error.response) {
-      // The request was made and the server responded with a non-2xx status code
-      errorMessage = `Error ${error.response.status}: ${error.response.data?.message || error.response.statusText}`;
+      errorMessage = `Error ${error.response.status}: ${error.response.data?.user_message || error.response.data?.developer_message || error.response.statusText}`;
     } else if (error.request) {
       // The request was made but no response was received
       errorMessage = "No response received from server.";
