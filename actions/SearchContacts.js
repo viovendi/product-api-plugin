@@ -30,7 +30,7 @@ module.exports = {
     {
       key: "ContactGroupId",
       title: "Contact Group ID",
-      description: "Contact group ID to filter contacts by.",
+      description: "Contact Group ID to filter contacts",
       type: "string",
       validation: {
         required: false,
@@ -39,7 +39,7 @@ module.exports = {
     {
       key: "SearchText",
       title: "Search Text",
-      description: "Search text to filter contacts by.",
+      description: "Search text to filter contacts.",
       type: "string",
       validation: {
         required: false,
