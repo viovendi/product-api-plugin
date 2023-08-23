@@ -1,6 +1,6 @@
 {
-  "name": "doo-product-automations",
-  "description": "doo Product Automations connector for Connery",
+  "name": "product-api-connector",
+  "description": "This Connery connector contains actions based on doo product API.",
   "license": "MIT",
   "author": {
     "name": "doo",

@@ -1,3 +1,4 @@
-# doo Product Automations
+# Product API Connector
 
-doo Product Automations connector for Connery
+This Connery connector contains actions based on doo product API.
+Every action requires a valid client credentials (Client ID and Client Secret) to be passed as parameters.
