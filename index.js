@@ -1,13 +1,13 @@
+const SearchContacts = require("./actions/SearchContacts");
 const SearchContactGroups = require("./actions/SearchContactGroups");
-const GetAllContactsForOrganization = require("./actions/GetAllContactsForOrganization");
 const DeleteContact = require("./actions/DeleteContact");
 
 module.exports = {
     title: 'Product API Connector',
     description: 'This Connery connector contains actions based on doo product API.',
     actions: [
+        SearchContacts,
         SearchContactGroups,
-        GetAllContactsForOrganization,
         DeleteContact,
     ],
     configurationParameters: [

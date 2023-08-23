@@ -63,7 +63,7 @@ module.exports = {
 
 async function handler({ inputParameters, configurationParameters, action }) {
   try {
-    const accessToken = await getAccessToken(inputParameters.ClientId, inputParameters.ClientSecret, configurationParameters.DooApiUrl);
+    const accessToken = await getAccessToken(inputParameters.ClientId, inputParameters.ClientSecret, configurationParameters.DooApiUrl, configurationParameters.DooApiKey, action.key);
 
     const result = await axios.get(`${configurationParameters.DooApiUrl}/v1/organizers/current/contact_groups`, {
       headers: {
