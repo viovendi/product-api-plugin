@@ -60,6 +60,15 @@ module.exports = {
         required: true,
       },
     },
+    {
+      key: "NumberOfContacts",
+      title: "Number of contacts",
+      description: "Number of contacts found in the organization matching the search criteria.",
+      type: "string",
+      validation: {
+        required: true,
+      },
+    },
   ],
 };
 
@@ -106,7 +115,8 @@ async function handler({ inputParameters, configurationParameters, action }) {
     }
 
     return {
-      Contacts: JSON.stringify(contacts)
+      Contacts: JSON.stringify(contacts),
+      NumberOfContacts: contacts.length.toString(),
     };
   } catch (error) {
     const errorMessage = getErrorMessage(error);
