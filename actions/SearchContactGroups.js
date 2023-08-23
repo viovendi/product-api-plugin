@@ -31,11 +31,17 @@ module.exports = {
       key: "ContactGroupId",
       title: "Contact Group ID",
       type: "string",
+      validation: {
+        required: false,
+      },
     },
     {
       key: "ContactGroupName",
       title: "Contact Group Name",
       type: "string",
+      validation: {
+        required: false,
+      },
     },
   ],
   operation: {
