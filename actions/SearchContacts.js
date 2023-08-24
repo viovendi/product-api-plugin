@@ -115,8 +115,8 @@ async function handler({ inputParameters, configurationParameters, action }) {
     }
 
     return {
-      Contacts: JSON.stringify(contacts),
-      NumberOfContacts: contacts.length.toString(),
+      Contacts: JSON.stringify(contacts), // The output parameter must be a string as Connery only supports string output parameters for now
+      NumberOfContacts: contacts.length.toString(), // Becasue of the array is returned as string, and becasue of the limitation of Make, we need this property to get the number of contact groups
     };
   } catch (error) {
     const errorMessage = getErrorMessage(error);
