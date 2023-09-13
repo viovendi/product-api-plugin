@@ -16,6 +16,23 @@ async function getAccessToken(clientId, clientSecret, dooApiUrl, dooApiKey, acti
     return response.data.data.access_token;
 }
 
+async function getInfoAboutCurrentOrganization(accessToken, dooApiUrl, dooApiKey, actionKey) {
+    const requestOptions = {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'x-api-key': dooApiKey,
+          'x-doo-user-agent': getUserAgent(actionKey),
+        }
+      };
+
+    const response = await axios.get(`${dooApiUrl}/v1/organizers/current/organizations`, requestOptions);
+
+    return {
+        organizationId: response.data.active_team.organization_id,
+        teamId: response.data.active_team.id
+    }
+}
+
 function getUserAgent(actionKey) {
     return {
         userAgent: 'connery',
@@ -50,6 +67,7 @@ function getErrorMessage(error) {
 
 module.exports = {
     getAccessToken,
+    getInfoAboutCurrentOrganization,
     getUserAgent,
     getErrorMessage
 }
