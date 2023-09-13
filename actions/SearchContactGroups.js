@@ -2,7 +2,7 @@ const axios = require("axios");
 const { getAccessToken, getErrorMessage, getUserAgent } = require("../shared/shared");
 const _ = require("lodash");
 
-module.exports = {
+const action = {
   key: "SearchContactGroups",
   title: "Search contact groups",
   description: `
@@ -125,4 +125,14 @@ async function handler({ inputParameters, configurationParameters, action }) {
     const errorMessage = getErrorMessage(error);
     throw new Error(errorMessage);
   }
+}
+
+// Expose internal functions for unit testing in the test environment.
+// Otherwise, export the action definition.
+if (process.env.NODE_ENV === 'test') {
+  module.exports = {
+    handler,
+  };
+} else {
+  module.exports = action;
 }

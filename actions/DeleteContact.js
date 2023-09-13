@@ -1,7 +1,7 @@
 const axios = require('axios');
 const { getAccessToken, getUserAgent, getErrorMessage } = require('../shared/shared');
 
-module.exports = {
+const action = {
   key: "DeleteContact",
   title: "Delete contact",
   description: "Delete contact from doo organization.",
@@ -67,4 +67,14 @@ async function handler({ inputParameters, configurationParameters, action }) {
     const errorMessage = getErrorMessage(error);
     throw new Error(errorMessage);
   }
+}
+
+// Expose internal functions for unit testing in the test environment.
+// Otherwise, export the action definition.
+if (process.env.NODE_ENV === 'test') {
+  module.exports = {
+    handler,
+  };
+} else {
+  module.exports = action;
 }
