@@ -50,6 +50,10 @@ const action = {
 
 async function handler({ inputParameters, configurationParameters, action }) {
   try {
+    // Get access token
+    const accessToken = await getAccessToken(inputParameters.ClientId, inputParameters.ClientSecret, configurationParameters.DooApiUrl, configurationParameters.DooApiKey, action.key);
+
+    // Set shared request options
     const sharedRequestOptions = {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
@@ -57,9 +61,6 @@ async function handler({ inputParameters, configurationParameters, action }) {
         'x-doo-user-agent': getUserAgent(action.key),
       }
     };
-
-    // Get access token
-    const accessToken = await getAccessToken(inputParameters.ClientId, inputParameters.ClientSecret, configurationParameters.DooApiUrl, configurationParameters.DooApiKey, action.key);
 
     // Get current OID
     const currentOid = await getInfoAboutCurrentOrganization(accessToken, configurationParameters.DooApiUrl, configurationParameters.DooApiKey, action.key);
